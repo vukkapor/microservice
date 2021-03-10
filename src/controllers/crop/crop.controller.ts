@@ -27,7 +27,7 @@ export class CropController {
     //just for CLI output
     this.logger.log(
       'Crop this image: ' +
-        file.filename +
+        file.originalname +
         ' with thees cordinates: zero-indexed offset from left edge: ' +
         left +
         ', z-i of from top edge: ' +

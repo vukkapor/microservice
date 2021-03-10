@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {SharpRotateService} from "../sharp/rotate/sharp-rotate.service";
+import { SharpRotateService } from '../sharp/rotate/sharp-rotate.service';
 
 @Injectable()
 export class RotateFactoryService {

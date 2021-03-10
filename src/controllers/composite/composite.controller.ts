@@ -16,6 +16,7 @@ export class CompositeController {
   constructor(private compositeFactoryService: CompositeFactoryService) {}
 
   @Post('file')
+  //TODO: Mora FilesInterceptor
   @UseInterceptors(FileInterceptor('file1'))
   @UseInterceptors(FileInterceptor('file2'))
   async compositeFile(
@@ -24,7 +25,7 @@ export class CompositeController {
   ) {
     //just for CLI output
     this.logger.log(
-      'Composite ' + file1.filename + ' with this image: ' + file2.filename,
+      'Composite ' + file1.originalname + ' with this image: ' + file2.filename,
     );
     //calls the rotate service and returns base64 string
     return this.compositeFactoryService

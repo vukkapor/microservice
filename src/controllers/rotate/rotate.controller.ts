@@ -7,7 +7,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import {RotateFactoryService} from "../../services/factories/rotate-factory.service";
+import { RotateFactoryService } from '../../services/factories/rotate-factory.service';
 
 @Controller('rotate')
 export class RotateController {
@@ -22,9 +22,13 @@ export class RotateController {
     @Body('angle') angle: string,
   ) {
     //just for CLI output
-    this.logger.log('Rotate ' + file.filename + ' angle of rotation: ' + angle);
+    this.logger.log(
+      'Rotate ' + file.originalname + ' angle of rotation: ' + angle,
+    );
     //calls the rotate service and returns base64 string
-    return this.rotateFactoryService.getInstance().rotateFile(file.buffer, parseInt(angle));
+    return this.rotateFactoryService
+      .getInstance()
+      .rotateFile(file.buffer, parseInt(angle));
   }
 
   @Post('link')

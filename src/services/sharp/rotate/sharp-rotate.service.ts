@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import * as sharp from 'sharp';
 import axios from 'axios';
-import {RotateServiceInterface} from "../../interfaces/rotate-service.interface";
+import { RotateServiceInterface } from '../../interfaces/rotate-service.interface';
 
 @Injectable()
-export class SharpRotateService implements RotateServiceInterface{
+export class SharpRotateService implements RotateServiceInterface {
   public async rotateFile(file: Buffer, angle: number) {
     return await sharp(file)
       .rotate(angle)
