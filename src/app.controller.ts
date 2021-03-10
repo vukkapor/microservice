@@ -3,6 +3,7 @@ import { ResizeService } from './resize/resize.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { RotateService } from './rotate/rotate.service';
 import { CompositeService } from './composite/composite.service';
+import { CropService } from './crop/crop.service';
 
 @Controller()
 export class AppController {
@@ -12,6 +13,7 @@ export class AppController {
     private resizeService: ResizeService,
     private rotateService: RotateService,
     private compositeService: CompositeService,
+    private cropService: CropService,
   ) {}
 
   //Define the message pattern for resize method
@@ -52,7 +54,7 @@ export class AppController {
     return this.rotateService.rotate(imageConfig.imageLink, imageConfig.angle);
   }
 
-  //Define the message pattern for rotate method
+  //Define the message pattern for composite method
   @MessagePattern('composite')
   async composite(imageConfig: { imageLink: string; imageLink2: string }) {
     //just for CLI output
@@ -66,6 +68,38 @@ export class AppController {
     return this.compositeService.composite(
       imageConfig.imageLink,
       imageConfig.imageLink2,
+    );
+  }
+
+  //Define the message pattern for crop method
+  @MessagePattern('crop')
+  async crop(imageConfig: {
+    imageLink: string;
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+  }) {
+    //just for CLI output
+    this.logger.log(
+      'Crop this image: ' +
+        imageConfig.imageLink +
+        ' with thees cordinates: zero-indexed offset from left edge: ' +
+        imageConfig.left +
+        ', z-i of from top edge: ' +
+        imageConfig.top +
+        ', width of region to extract: ' +
+        imageConfig.width +
+        ', and height to extr: ' +
+        imageConfig.height,
+    );
+    //calls the rotate service and returns base64 string
+    return this.cropService.crop(
+      imageConfig.imageLink,
+      imageConfig.left,
+      imageConfig.top,
+      imageConfig.width,
+      imageConfig.height,
     );
   }
 }
