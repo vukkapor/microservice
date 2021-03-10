@@ -1,13 +1,21 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { RotateService } from './rotate/rotate.service';
-import { ResizeService } from './resize/resize.service';
-import { CompositeService } from './composite/composite.service';
-import { CropService } from './crop/crop.service';
+import { RotateService } from './services/rotate/rotate.service';
+import { ResizeService } from './services/resize/resize.service';
+import { CompositeService } from './services/composite/composite.service';
+import { CropService } from './services/crop/crop.service';
+import { ResizeController } from './controllers/resize/resize.controller';
+import { RotateController } from './controllers/rotate/rotate.controller';
+import { CompositeController } from './controllers/composite/composite.controller';
+import { CropController } from './controllers/crop/crop.controller';
 
 @Module({
   imports: [],
-  controllers: [AppController],
+  controllers: [
+    ResizeController,
+    RotateController,
+    CompositeController,
+    CropController,
+  ],
   providers: [ResizeService, RotateService, CompositeService, CropService],
 })
 export class AppModule {}
