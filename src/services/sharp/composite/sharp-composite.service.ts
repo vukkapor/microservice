@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import * as sharp from 'sharp';
 import axios from 'axios';
+import { CompositeServiceInterface } from '../../interfaces/composite-service.interface';
 
 @Injectable()
-export class CompositeService {
+export class SharpCompositeService implements CompositeServiceInterface {
   public async compositeFile(file1: Buffer, file2: Buffer) {
     return await sharp(file1)
       .composite([{ input: file2, gravity: 'southeast' }])

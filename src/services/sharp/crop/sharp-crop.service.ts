@@ -1,13 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import * as sharp from 'sharp';
-import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util';
 import axios from 'axios';
+import { CropServiceInterface } from '../../interfaces/crop-service.interface';
 
 @Injectable()
-export class ResizeService {
-  public async resizeFile(file: Buffer, width: number, height: number) {
+export class SharpCropService implements CropServiceInterface {
+  public async cropFile(
+    file: Buffer,
+    left: number,
+    top: number,
+    width: number,
+    height: number,
+  ) {
     return await sharp(file)
-      .resize(width, height, { fit: sharp.fit.contain })
+      .extract({ left: left, top: top, width: width, height: height })
       .png()
       .toBuffer()
       .then((value) => {
@@ -16,11 +22,18 @@ export class ResizeService {
       .catch();
   }
 
-  public async resizeLink(file: string, width: number, height: number) {
+  public async cropLink(
+    file: string,
+    left: number,
+    top: number,
+    width: number,
+    height: number,
+  ) {
     const fileBuffer = (await axios({ url: file, responseType: 'arraybuffer' }))
       .data as Buffer;
+
     return await sharp(fileBuffer)
-      .resize(width, height, { fit: sharp.fit.contain })
+      .extract({ left: left, top: top, width: width, height: height })
       .png()
       .toBuffer()
       .then((value) => {

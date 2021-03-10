@@ -6,14 +6,14 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { CompositeService } from '../../services/composite/composite.service';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { CompositeFactoryService } from '../../services/factories/composite-factory.service';
 
 @Controller('composite')
 export class CompositeController {
   private logger = new Logger('AppController');
 
-  constructor(private compositeService: CompositeService) {}
+  constructor(private compositeFactoryService: CompositeFactoryService) {}
 
   @Post('file')
   @UseInterceptors(FileInterceptor('file1'))
@@ -27,7 +27,9 @@ export class CompositeController {
       'Composite ' + file1.filename + ' with this image: ' + file2.filename,
     );
     //calls the rotate service and returns base64 string
-    return this.compositeService.compositeFile(file1.buffer, file2.buffer);
+    return this.compositeFactoryService
+      .getInstance()
+      .compositeFile(file1.buffer, file2.buffer);
   }
 
   @Post('link')
@@ -38,6 +40,8 @@ export class CompositeController {
     //just for CLI output
     this.logger.log('Composite ' + link1 + ' with this image: ' + link2);
     //calls the rotate service and returns base64 string
-    return this.compositeService.compositeLink(link1, link2);
+    return this.compositeFactoryService
+      .getInstance()
+      .compositeLink(link1, link2);
   }
 }

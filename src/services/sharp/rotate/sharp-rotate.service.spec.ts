@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { RotateService } from './rotate.service';
+import { SharpRotateService } from './sharp-rotate.service';
 
-describe('RotateService', () => {
-  let service: RotateService;
+describe('SharpRotateService', () => {
+  let service: SharpRotateService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [RotateService],
+      providers: [SharpRotateService],
     }).compile();
 
-    service = module.get<RotateService>(RotateService);
+    service = module.get<SharpRotateService>(SharpRotateService);
   });
 
   it('should be defined', () => {

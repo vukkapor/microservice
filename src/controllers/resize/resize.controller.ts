@@ -6,14 +6,14 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { ResizeService } from '../../services/resize/resize.service';
 import { FileInterceptor } from '@nestjs/platform-express';
+import {ResizeFactoryService} from "../../services/factories/resize-factory.service";
 
 @Controller('resize')
 export class ResizeController {
   private logger = new Logger('AppController');
 
-  constructor(private resizeService: ResizeService) {}
+  constructor(private resizeFactoryService: ResizeFactoryService) {}
 
   @Post('file')
   @UseInterceptors(FileInterceptor('file'))
@@ -32,7 +32,7 @@ export class ResizeController {
         height,
     );
     //calls the resize service and returns base64 string
-    return this.resizeService.resizeFile(
+    return this.resizeFactoryService.getInstance().resizeFile(
       file.buffer,
       parseInt(width),
       parseInt(height),
@@ -50,6 +50,6 @@ export class ResizeController {
       'Resize ' + link + ' to width: ' + width + ' and height: ' + height,
     );
     //calls the resize service and returns base64 string
-    return this.resizeService.resizeLink(link, width, height);
+    return this.resizeFactoryService.getInstance().resizeLink(link, width, height);
   }
 }

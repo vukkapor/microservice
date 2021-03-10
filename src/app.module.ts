@@ -1,12 +1,16 @@
 import { Module } from '@nestjs/common';
-import { RotateService } from './services/rotate/rotate.service';
-import { ResizeService } from './services/resize/resize.service';
-import { CompositeService } from './services/composite/composite.service';
-import { CropService } from './services/crop/crop.service';
+import { SharpRotateService } from './services/sharp/rotate/sharp-rotate.service';
+import { SharpResizeService } from './services/sharp/resize/sharp-resize.service';
+import { SharpCompositeService } from './services/sharp/composite/sharp-composite.service';
+import { SharpCropService } from './services/sharp/crop/sharp-crop.service';
 import { ResizeController } from './controllers/resize/resize.controller';
 import { RotateController } from './controllers/rotate/rotate.controller';
 import { CompositeController } from './controllers/composite/composite.controller';
 import { CropController } from './controllers/crop/crop.controller';
+import { ResizeFactoryService } from './services/factories/resize-factory.service';
+import { RotateFactoryService } from './services/factories/rotate-factory.service';
+import { CompositeFactoryService } from './services/factories/composite-factory.service';
+import { CropFactoryService } from './services/factories/crop-factory.service';
 
 @Module({
   imports: [],
@@ -16,6 +20,15 @@ import { CropController } from './controllers/crop/crop.controller';
     CompositeController,
     CropController,
   ],
-  providers: [ResizeService, RotateService, CompositeService, CropService],
+  providers: [
+    SharpRotateService,
+    SharpResizeService,
+    SharpCropService,
+    SharpCompositeService,
+    ResizeFactoryService,
+    RotateFactoryService,
+    CompositeFactoryService,
+    CropFactoryService,
+  ],
 })
 export class AppModule {}

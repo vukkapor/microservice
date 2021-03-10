@@ -6,14 +6,14 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { CropService } from '../../services/crop/crop.service';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { CropFactoryService } from '../../services/factories/crop-factory.service';
 
 @Controller('crop')
 export class CropController {
   private logger = new Logger('CropController');
 
-  constructor(private cropService: CropService) {}
+  constructor(private cropFactoryService: CropFactoryService) {}
 
   @Post('file')
   @UseInterceptors(FileInterceptor('file'))
@@ -38,13 +38,15 @@ export class CropController {
         height,
     );
     //calls the rotate service and returns base64 string
-    return this.cropService.cropFile(
-      file.buffer,
-      parseInt(left),
-      parseInt(top),
-      parseInt(width),
-      parseInt(height),
-    );
+    return this.cropFactoryService
+      .getInstance()
+      .cropFile(
+        file.buffer,
+        parseInt(left),
+        parseInt(top),
+        parseInt(width),
+        parseInt(height),
+      );
   }
 
   @Post('link')
@@ -69,6 +71,8 @@ export class CropController {
         height,
     );
     //calls the rotate service and returns base64 string
-    return this.cropService.cropLink(link, left, top, width, height);
+    return this.cropFactoryService
+      .getInstance()
+      .cropLink(link, left, top, width, height);
   }
 }
