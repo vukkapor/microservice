@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  HostParam,
   Logger,
   Post,
   UploadedFile,
@@ -18,6 +19,7 @@ export class CropController {
   @Post('file')
   @UseInterceptors(FileInterceptor('file'))
   async cropFile(
+    @Body('type') type: string,
     @UploadedFile('file') file: Express.Multer.File,
     @Body('left') left: string,
     @Body('top') top: string,
@@ -39,7 +41,7 @@ export class CropController {
     );
     //calls the rotate service and returns base64 string
     return this.cropFactoryService
-      .getInstance()
+      .getInstance(parseInt(type))
       .cropFile(
         file.buffer,
         parseInt(left),
@@ -51,6 +53,7 @@ export class CropController {
 
   @Post('link')
   async cropLink(
+    @Body('type') type: string,
     @Body('link') link: string,
     @Body('left') left: number,
     @Body('top') top: number,
@@ -72,7 +75,7 @@ export class CropController {
     );
     //calls the rotate service and returns base64 string
     return this.cropFactoryService
-      .getInstance()
+      .getInstance(parseInt(type))
       .cropLink(link, left, top, width, height);
   }
 }

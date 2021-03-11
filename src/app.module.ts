@@ -11,6 +11,10 @@ import { ResizeFactoryService } from './services/factories/resize-factory.servic
 import { RotateFactoryService } from './services/factories/rotate-factory.service';
 import { CompositeFactoryService } from './services/factories/composite-factory.service';
 import { CropFactoryService } from './services/factories/crop-factory.service';
+import { JimpRotateService } from './services/jimp/rotate/jimp-rotate.service';
+import { JimpResizeService } from './services/jimp/resize/jimp-resize.service';
+import { JimpCropService } from './services/jimp/crop/jimp-crop.service';
+import { JimpCompositeService } from './services/jimp/composite/jimp-composite.service';
 
 @Module({
   imports: [],
@@ -25,6 +29,10 @@ import { CropFactoryService } from './services/factories/crop-factory.service';
     SharpResizeService,
     SharpCropService,
     SharpCompositeService,
+    JimpRotateService,
+    JimpResizeService,
+    JimpCropService,
+    JimpCompositeService,
     ResizeFactoryService,
     RotateFactoryService,
     CompositeFactoryService,

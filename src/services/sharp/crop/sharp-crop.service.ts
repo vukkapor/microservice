@@ -14,7 +14,6 @@ export class SharpCropService implements CropServiceInterface {
   ) {
     return await sharp(file)
       .extract({ left: left, top: top, width: width, height: height })
-      .png()
       .toBuffer()
       .then((value) => {
         return value.toString('base64');
@@ -34,7 +33,6 @@ export class SharpCropService implements CropServiceInterface {
 
     return await sharp(fileBuffer)
       .extract({ left: left, top: top, width: width, height: height })
-      .png()
       .toBuffer()
       .then((value) => {
         return value.toString('base64');

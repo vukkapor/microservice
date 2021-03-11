@@ -8,7 +8,6 @@ export class SharpRotateService implements RotateServiceInterface {
   public async rotateFile(file: Buffer, angle: number) {
     return await sharp(file)
       .rotate(angle)
-      .png()
       .toBuffer()
       .then((value) => {
         return value.toString('base64');
@@ -21,7 +20,6 @@ export class SharpRotateService implements RotateServiceInterface {
       .data as Buffer;
     return await sharp(fileBuffer)
       .rotate(angle)
-      .png()
       .toBuffer()
       .then((value) => {
         return value.toString('base64');

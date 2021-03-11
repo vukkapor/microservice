@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  HostParam,
   Logger,
   Post,
   UploadedFile,
@@ -18,6 +19,7 @@ export class RotateController {
   @Post('file')
   @UseInterceptors(FileInterceptor('file'))
   async rotateFile(
+    @Body('type') type: string,
     @UploadedFile('file') file: Express.Multer.File,
     @Body('angle') angle: string,
   ) {
@@ -27,15 +29,21 @@ export class RotateController {
     );
     //calls the rotate service and returns base64 string
     return this.rotateFactoryService
-      .getInstance()
+      .getInstance(parseInt(type))
       .rotateFile(file.buffer, parseInt(angle));
   }
 
   @Post('link')
-  async rotateLink(@Body('link') link: string, @Body('angle') angle: number) {
+  async rotateLink(
+    @Body('type') type: string,
+    @Body('link') link: string,
+    @Body('angle') angle: number,
+  ) {
     //just for CLI output
     this.logger.log('Rotate ' + link + ' angle of rotation: ' + angle);
     //calls the rotate service and returns base64 string
-    return this.rotateFactoryService.getInstance().rotateLink(link, angle);
+    return this.rotateFactoryService
+      .getInstance(parseInt(type))
+      .rotateLink(link, angle);
   }
 }

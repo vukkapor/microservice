@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  HostParam,
   Logger,
   Post,
   UploadedFile,
@@ -18,6 +19,7 @@ export class ResizeController {
   @Post('file')
   @UseInterceptors(FileInterceptor('file'))
   async resizeFile(
+    @Body('type') type: string,
     @UploadedFile('file') file: Express.Multer.File,
     @Body('width') width: string,
     @Body('height') height: string,
@@ -33,12 +35,13 @@ export class ResizeController {
     );
     //calls the resize service and returns base64 string
     return this.resizeFactoryService
-      .getInstance()
+      .getInstance(parseInt(type))
       .resizeFile(file.buffer, parseInt(width), parseInt(height));
   }
 
   @Post('link')
   async resizeLink(
+    @Body('type') type: string,
     @Body('link') link: string,
     @Body('width') width: number,
     @Body('height') height: number,
@@ -49,7 +52,7 @@ export class ResizeController {
     );
     //calls the resize service and returns base64 string
     return this.resizeFactoryService
-      .getInstance()
+      .getInstance(parseInt(type))
       .resizeLink(link, width, height);
   }
 }

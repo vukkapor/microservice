@@ -9,7 +9,6 @@ export class SharpResizeService implements ResizeServiceInterface {
   public async resizeFile(file: Buffer, width: number, height: number) {
     return await sharp(file)
       .resize(width, height, { fit: sharp.fit.contain })
-      .png()
       .toBuffer()
       .then((value) => {
         return value.toString('base64');
@@ -22,7 +21,6 @@ export class SharpResizeService implements ResizeServiceInterface {
       .data as Buffer;
     return await sharp(fileBuffer)
       .resize(width, height, { fit: sharp.fit.contain })
-      .png()
       .toBuffer()
       .then((value) => {
         return value.toString('base64');
